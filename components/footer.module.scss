@@ -1,0 +1,23 @@
+.container {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 10em;
+    
+    p {
+        font-size: 0.8em;
+        color: rgb(121, 121, 121);
+
+        a {
+            color: rgb(116, 116, 245);
+            text-decoration: none;
+            letter-spacing: 1.1px;
+
+            &:hover {
+                color: rgb(100, 100, 209);
+                transition: 0.2s;
+            }
+        }
+    }
+}
