@@ -10,7 +10,8 @@ export default function Navigation() {
   const [isDay, setIsDay] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("Zollikofen");
-  const [prevLocation, setPrevLocation] = useState(currentLocation);
+  const [searchTerm, setSearchTerm] = useState(currentLocation);
+
   //extract to .env.local
   const displayCount = 5;
 
@@ -32,12 +33,11 @@ export default function Navigation() {
 
     return () => {
       window.removeEventListener("click", handleDropDownState);
-    }
+    };
   }, []);
 
   const onClickSearch = () => {
-    setPrevLocation(currentLocation);
-    setCurrentLocation("");
+    setSearchTerm("");
   };
 
   const handleDropDownState = (e) => {
@@ -46,24 +46,19 @@ export default function Navigation() {
       e.target.id != "search-input" &&
       !e.target.classList.contains("locationContainer")
     ) {
-      console.log("should be closed");
       setIsSearching(false);
       setLocationsDisplay([]);
-      
-      setPrevLocation(x => {
-        console.log(x);
-        setCurrentLocation(x)
+      setCurrentLocation((x) => {
+        setSearchTerm(x);
         return x;
       });
     }
   };
 
-  useEffect(() => {
-    console.log("useEffect", currentLocation);
-  }, [currentLocation])
-
   const search = (e) => {
     setIsSearching(true);
+    setSearchTerm(e.currentTarget.value);
+
     let x = locations.filter((location) =>
       location.includes(e.currentTarget.value)
     );
@@ -109,7 +104,7 @@ export default function Navigation() {
         {/*todo: overrengineer searchbar...*/}
         <div className={styles.searchbar}>
           <input
-            defaultValue={currentLocation}
+            value={searchTerm}
             onChange={(e) => search(e)}
             style={{
               borderBottomRightRadius: isSearching ? "0px" : "5px",
