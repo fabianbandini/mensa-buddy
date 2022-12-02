@@ -1,16 +1,18 @@
 import Image from "next/image";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./navigation.module.scss";
+import MensaApi from "../lip/api/Mensa"
 
 export default function Navigation() {
-  const [locations, setLocations] = useState([
-    "Zollikofen",
-    "Engehalden",
-    "Wylerpark",
-  ]);
+  const [locations, setLocations] = useState([]);
   const [isDay, setIsDay] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("Zollikofen");
+
+  useEffect(async () => {
+    const resp = await MensaApi.getAll();
+    console.log(resp);
+  }, []) 
 
   const clickDropdown = () => {
     setClicked(!clicked);
