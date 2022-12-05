@@ -1,7 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const useSession = () => {
-  return {};
+  const [selectedLocation, setSelectedLocaton] = useState("");
+
+  const selectLocation = (location) => {
+    setSelectedLocaton(location);
+  }
+
+  const resetLocation = () => {
+    setSelectedLocaton("");
+  }
+
+  return {selectLocation, resetLocation, selectedLocation};
 };
 
 const GlobalContext = createContext();

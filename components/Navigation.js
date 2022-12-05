@@ -2,6 +2,7 @@ import Image from "next/image";
 import { use, useEffect, useRef, useState } from "react";
 import styles from "./navigation.module.scss";
 import MensaApi from "../lip/api/Mensa";
+import { useGlobalContext } from "../store";
 
 export default function Navigation() {
   const [locations, setLocations] = useState([]);
@@ -11,6 +12,7 @@ export default function Navigation() {
   const [clicked, setClicked] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("Zollikofen");
   const [searchTerm, setSearchTerm] = useState(currentLocation);
+  const {selectLocation} = useGlobalContext();
 
   //extract to .env.local
   const displayCount = 5;
@@ -38,6 +40,11 @@ export default function Navigation() {
 
   const onClickSearch = () => {
     setSearchTerm("");
+  };
+
+  const onClickSearchLocation = (location) => {
+    selectLocation(location);
+    setCurrentLocation(location);
   };
 
   const handleDropDownState = (e) => {
@@ -113,19 +120,28 @@ export default function Navigation() {
             onClick={onClickSearch}
             id="search-input"
           />
-          <div className={styles.displayList} id="display-list">
-            {locationsDisplay.map((location) => {
-              //add key to p
-              return (
-                <div
-                  className={`${styles.locationContainer} locationContainer`}
-                  key={location}
-                >
-                  {location}
-                </div>
-              );
-            })}
-          </div>
+          {locationsDisplay.length != 0 ? (
+            <div className={styles.displayList} id="display-list">
+              {locationsDisplay.map((location) => {
+                //add key to p
+                return (
+                  <div
+                    className={`${styles.locationContainer} locationContainer`}
+                    key={location}
+                  >
+                    <p
+                      className={styles.location}
+                      onClick={() => onClickSearchLocation(location)}
+                    >
+                      {location}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
