@@ -1,4 +1,4 @@
-Mensa Buddy is a tool where you can access all menuplans of every [https://zfv.ch/de/betriebe/personalrestaurants](ZFV) canteen.
+Mensa Buddy is a tool where you can access all menuplans of every [ZFV](https://zfv.ch/de/betriebe/personalrestaurants) canteen.
 
 ## ✨ Features
 
